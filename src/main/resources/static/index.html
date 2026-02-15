@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice App</title>
+</head>
+<body>
+
+<h2>Create Invoice</h2>
+
+<input id="name" placeholder="Customer Name"/>
+<input id="amount" placeholder="Amount"/>
+<button onclick="createInvoice()">Create</button>
+
+<h3>Invoices</h3>
+<ul id="invoiceList"></ul>
+
+<script>
+const API_URL = window.location.origin + "/api/invoices";
+
+function createInvoice() {
+    const customerName = document.getElementById("name").value;
+    const amount = document.getElementById("amount").value;
+
+    fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            customerName: customerName,
+            amount: parseFloat(amount)
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert("Invoice Created!");
+        loadInvoices();
+    });
+}
+
+function loadInvoices() {
+    fetch(API_URL)
+    .then(res => res.json())
+    .then(data => {
+        const list = document.getElementById("invoiceList");
+        list.innerHTML = "";
+        data.forEach(inv => {
+            const li = document.createElement("li");
+            li.innerHTML = inv.invoiceNumber +
+                " - ₹" + inv.amount +
+                " <a href='" + inv.blobUrl + "' target='_blank'>Download</a>";
+            list.appendChild(li);
+        });
+    });
+}
+
+loadInvoices();
+</script>
+
+</body>
+</html>
