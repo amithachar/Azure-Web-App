@@ -9,10 +9,10 @@ import java.io.ByteArrayInputStream;
 @Service
 public class AzureBlobService {
 
-    @Value("${azure.storage.connection-string}")
+    @Value("${AZURE_STORAGE_CONNECTION_STRING}")
     private String connectionString;
 
-    @Value("${azure.storage.container-name}")
+    @Value("${AZURE_STORAGE_CONTAINER_NAME}")
     private String containerName;
 
     public String upload(byte[] data, String fileName) {
