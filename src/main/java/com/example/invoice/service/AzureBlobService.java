@@ -23,7 +23,7 @@ public class AzureBlobService {
                         .buildClient();
 
         BlobContainerClient containerClient =
-                serviceClient.getBlobContainerClient(containerName);
+                serviceClient.getBlobContainerClient(invoices);
 
         BlobClient blobClient =
                 containerClient.getBlobClient(fileName);
