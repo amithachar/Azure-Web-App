@@ -88,3 +88,109 @@ The system follows a standard **N-Tier enterprise design**:
 **Persistence Layer** (Data Access)
   ↓
 **Infrastructure Layer** (Azure SQL + Azure Blob Storage)
+
+
+
+* steps
+
+  # 📘 INVOICE SYSTEM – COMPLETE CREATION & EXECUTION DOCUMENTATION
+
+This document provides a step-by-step guide to deploying and executing the cloud-native Invoice System on Azure.
+
+---
+
+## 🔹 PHASE 1 — Azure Resource Creation
+
+### Step 1 — Create Resource Group
+**Azure Portal** → **Resource Groups** → **Create**
+* **Name:** `invoice-rg`
+* **Region:** (Use the same region for all resources)
+* *Note: This keeps everything logically grouped.*
+
+### Step 2 — Create Azure SQL Database
+**Azure Portal** → **SQL Databases** → **Create**
+* **Database name:** `invoice-db`
+* **Server:** Create new
+* **Authentication:** SQL Authentication
+* **Important:** Save your **Server name**, **Username**, and **Password**.
+* **Networking:** * Enable: `Allow Azure services and resources to access this server`
+
+### Step 3 — Create Storage Account
+**Azure Portal** → **Storage Accounts** → **Create**
+* **Name:** `invoiceblobstore`
+* **Performance:** Standard
+* **Redundancy:** LRS
+* **Container Creation:** After creation, go to **Containers** → **+ Container**
+    * **Name:** `invoices`
+    * **Access level:** Private
+
+### Step 4 — Create App Service
+**Azure Portal** → **App Services** → **Create**
+* **Name:** `invoice-backend`
+* **Runtime:** `Java 17`
+* **OS:** `Linux`
+* **Publish:** `Code`
+* **Pricing tier:** `Basic`
+
+---
+
+## 🔹 PHASE 2 — Important Connections
+
+### 1️⃣ SQL Connection String
+Navigate to **SQL Database** → **Connection Strings** → **JDBC**.
+In **App Service Settings** → **Environment Variables**, add the following:
+* `SPRING_DATASOURCE_URL`
+* `SPRING_DATASOURCE_USERNAME`
+* `SPRING_DATASOURCE_PASSWORD`
+
+> ⚠️ **Pro Tip:** Never hardcode credentials in `application.properties` in production.
+
+### 2️⃣ Storage Connection String
+Navigate to **Storage Account** → **Access Keys** → **Show Keys**.
+In **App Service** → **Environment Variables**, add the following:
+* `AZURE_STORAGE_CONNECTION_STRING`
+* `AZURE_STORAGE_CONTAINER_NAME` = `invoices`
+
+*Note: Restart App Service after saving these variables.*
+
+---
+
+## 🔹 PHASE 3 — Application Architecture
+
+
+
+**The Flow:**
+**Browser** → **App Service (Spring Boot)** → **Azure SQL** (Metadata) + **Azure Blob** (PDF File)
+
+**Separation of Responsibilities:**
+* **Azure SQL:** Structured data & Metadata.
+* **Blob Storage:** Physical file storage.
+* **App Service:** Stateless business logic.
+
+---
+
+## 🔹 PHASE 4 — Local Development Execution
+
+1. **Clone Project**
+   ```bash
+   git clone <repo-url>
+   cd invoice-app
+
+## 🏗️ Phase 4 — Local Development & Execution
+
+Before deploying to the cloud, ensure your local environment is configured correctly for testing.
+
+### 1. Configure `application.properties` (Local Only)
+Set your local environment variables or update the properties file. Use your Azure SQL (with your local IP whitelisted) and Storage Connection Strings.
+
+```properties
+# Database Configuration
+spring.datasource.url=jdbc:sqlserver://<server>.database.windows.net:1433;database=invoice-db
+spring.datasource.username=<your-username>
+spring.datasource.password=<your-password>
+
+# Azure Blob Storage Configuration
+azure.storage.connection-string=<your-connection-string>
+azure.storage.container-name=invoices
+
+
