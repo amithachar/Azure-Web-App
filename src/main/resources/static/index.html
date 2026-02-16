@@ -46,7 +46,7 @@ function loadInvoices() {
             const li = document.createElement("li");
             li.innerHTML = inv.invoiceNumber +
                 " - ₹" + inv.amount +
-                " <a href='" + inv.blobUrl + "' target='_blank'>Download</a>";
+                " <a href="${invoice.blobUrl}" target="_blank">Download PDF</a>";
             list.appendChild(li);
         });
     });
