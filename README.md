@@ -175,3 +175,22 @@ In **App Service** → **Environment Variables**, add the following:
    ```bash
    git clone <repo-url>
    cd invoice-app
+
+## 🏗️ Phase 4 — Local Development & Execution
+
+Before deploying to the cloud, ensure your local environment is configured correctly for testing.
+
+### 1. Configure `application.properties` (Local Only)
+Set your local environment variables or update the properties file. Use your Azure SQL (with your local IP whitelisted) and Storage Connection Strings.
+
+```properties
+# Database Configuration
+spring.datasource.url=jdbc:sqlserver://<server>.database.windows.net:1433;database=invoice-db
+spring.datasource.username=<your-username>
+spring.datasource.password=<your-password>
+
+# Azure Blob Storage Configuration
+azure.storage.connection-string=<your-connection-string>
+azure.storage.container-name=invoices
+
+
