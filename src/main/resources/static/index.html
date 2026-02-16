@@ -2,8 +2,106 @@
 <html>
 <head>
     <title>Invoice App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #4e73df, #1cc88a);
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 800px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            animation: fadeIn 0.8s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2, h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        input {
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4e73df;
+            box-shadow: 0 0 8px rgba(78,115,223,0.4);
+        }
+
+        button {
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: none;
+            background: #4e73df;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #2e59d9;
+            transform: translateY(-2px);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            background: #f8f9fc;
+            padding: 12px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: 0.3s;
+        }
+
+        li:hover {
+            background: #e2e6ff;
+            transform: scale(1.02);
+        }
+
+        .download-btn {
+            background: #1cc88a;
+            padding: 6px 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: white;
+            font-size: 13px;
+            transition: 0.3s;
+        }
+
+        .download-btn:hover {
+            background: #17a673;
+        }
+    </style>
 </head>
 <body>
+
+<div class="container">
 
 <h2>Create Invoice</h2>
 
@@ -13,6 +111,8 @@
 
 <h3>Invoices</h3>
 <ul id="invoiceList"></ul>
+
+</div>
 
 <script>
 const API_URL = window.location.origin + "/api/invoices";
@@ -30,7 +130,7 @@ function createInvoice() {
         })
     })
     .then(res => res.json())
-    .then(data => {
+    .then(() => {
         alert("Invoice Created!");
         loadInvoices();
     });
@@ -42,11 +142,17 @@ function loadInvoices() {
     .then(data => {
         const list = document.getElementById("invoiceList");
         list.innerHTML = "";
+
         data.forEach(inv => {
             const li = document.createElement("li");
-            li.innerHTML = inv.invoiceNumber +
-                " - ₹" + inv.amount +
-                " <a href="${invoice.blobUrl}" target="_blank">Download PDF</a>";
+
+            li.innerHTML = `
+                <span>${inv.invoiceNumber} - ₹${inv.amount}</span>
+                <a href="${inv.blobUrl}" target="_blank" class="download-btn">
+                    Download PDF
+                </a>
+            `;
+
             list.appendChild(li);
         });
     });
