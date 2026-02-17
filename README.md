@@ -215,6 +215,13 @@ azure.storage.container-name=invoices
 ![invoice-rg](https://github.com/user-attachments/assets/8a20f2b7-5e8c-41ec-a4c7-32e2ceafdd2b)
 
 
+## Adding extra column in current 
 
+```
+SELECT * FROM invoices;
 
+ALTER TABLE invoices
+ADD invoice_date DATE,
+    po_number VARCHAR(100);
+```
 
