@@ -20,25 +20,30 @@ public class InvoiceService {
         this.blobService = blobService;
     }
 
-    public Invoice createInvoice(InvoiceRequest request) throws Exception {
+public Invoice createInvoice(InvoiceRequest request) throws Exception {
 
-        String invoiceNumber = "INV-" + System.currentTimeMillis();
+    String invoiceNumber = "INV-" + System.currentTimeMillis();
 
-        byte[] pdf = pdfService.generateInvoicePdf(
-                invoiceNumber,
-                request.getCustomerName(),
-                request.getAmount()
-        );
+    byte[] pdf = pdfService.generateInvoicePdf(
+            invoiceNumber,
+            request.getCustomerName(),
+            request.getAmount(),
+            request.getInvoiceDate(),
+            request.getPoNumber()
+    );
 
-        String fileName = invoiceNumber + ".pdf";
-        String blobUrl = blobService.upload(pdf, fileName);
+    String fileName = invoiceNumber + ".pdf";
+    String blobUrl = blobService.upload(pdf, fileName);
 
-        Invoice invoice = new Invoice();
-        invoice.setInvoiceNumber(invoiceNumber);
-        invoice.setCustomerName(request.getCustomerName());
-        invoice.setAmount(request.getAmount());
-        invoice.setBlobUrl(blobUrl);
+    Invoice invoice = new Invoice();
+    invoice.setInvoiceNumber(invoiceNumber);
+    invoice.setCustomerName(request.getCustomerName());
+    invoice.setAmount(request.getAmount());
+    invoice.setInvoiceDate(request.getInvoiceDate());
+    invoice.setPoNumber(request.getPoNumber());
+    invoice.setBlobUrl(blobUrl);
 
-        return repository.save(invoice);
-    }
+    return repository.save(invoice);
+}
+
 }

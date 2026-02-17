@@ -1,59 +1,46 @@
 package com.example.invoice.entity;
 
 import jakarta.persistence.*;
+import java.time.LocalDate;
 
 @Entity
-@Table(name = "invoices")
 public class Invoice {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     private String invoiceNumber;
     private String customerName;
     private Double amount;
     private String blobUrl;
 
-    public Invoice() {}
+    private LocalDate invoiceDate;
+    private String poNumber;
 
-    public Integer getId() {
-        return id;
-    }
+    private LocalDate createdAt = LocalDate.now();
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+    // Getters and Setters
 
-    public String getInvoiceNumber() {
-        return invoiceNumber;
-    }
+    public Long getId() { return id; }
 
-    public void setInvoiceNumber(String invoiceNumber) {
-        this.invoiceNumber = invoiceNumber;
-    }
+    public String getInvoiceNumber() { return invoiceNumber; }
+    public void setInvoiceNumber(String invoiceNumber) { this.invoiceNumber = invoiceNumber; }
 
-    public String getCustomerName() {
-        return customerName;
-    }
+    public String getCustomerName() { return customerName; }
+    public void setCustomerName(String customerName) { this.customerName = customerName; }
 
-    public void setCustomerName(String customerName) {
-        this.customerName = customerName;
-    }
+    public Double getAmount() { return amount; }
+    public void setAmount(Double amount) { this.amount = amount; }
 
-    public Double getAmount() {
-        return amount;
-    }
+    public String getBlobUrl() { return blobUrl; }
+    public void setBlobUrl(String blobUrl) { this.blobUrl = blobUrl; }
 
-    public void setAmount(Double amount) {
-        this.amount = amount;
-    }
+    public LocalDate getInvoiceDate() { return invoiceDate; }
+    public void setInvoiceDate(LocalDate invoiceDate) { this.invoiceDate = invoiceDate; }
 
-    public String getBlobUrl() {
-        return blobUrl;
-    }
+    public String getPoNumber() { return poNumber; }
+    public void setPoNumber(String poNumber) { this.poNumber = poNumber; }
 
-    public void setBlobUrl(String blobUrl) {
-        this.blobUrl = blobUrl;
-    }
+    public LocalDate getCreatedAt() { return createdAt; }
 }

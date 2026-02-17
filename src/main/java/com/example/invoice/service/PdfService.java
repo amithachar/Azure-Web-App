@@ -22,6 +22,9 @@ public class PdfService {
         document.add(new Paragraph("Invoice Number: " + invoiceNumber));
         document.add(new Paragraph("Customer: " + customer));
         document.add(new Paragraph("Amount: ₹" + amount));
+        document.add(new Paragraph("Invoice Date: " + invoice.getInvoiceDate()));
+        document.add(new Paragraph("PO Number: " + invoice.getPoNumber()));
+
         document.close();
 
         return out.toByteArray();
