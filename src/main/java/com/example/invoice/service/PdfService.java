@@ -1,29 +1,35 @@
 package com.example.invoice.service;
 
-import com.lowagie.text.Document;
-import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
-
 import java.io.ByteArrayOutputStream;
+import java.time.LocalDate;
+
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
 
 @Service
 public class PdfService {
 
     public byte[] generateInvoicePdf(String invoiceNumber,
-                                     String customer,
-                                     Double amount) throws Exception {
+                                     String customerName,
+                                     Double amount,
+                                     LocalDate invoiceDate,
+                                     String poNumber) throws Exception {
 
         ByteArrayOutputStream out = new ByteArrayOutputStream();
-        Document document = new Document();
-        PdfWriter.getInstance(document, out);
 
-        document.open();
+        PdfWriter writer = new PdfWriter(out);
+        PdfDocument pdf = new PdfDocument(writer);
+        Document document = new Document(pdf);
+
+        document.add(new Paragraph("INVOICE"));
         document.add(new Paragraph("Invoice Number: " + invoiceNumber));
-        document.add(new Paragraph("Customer: " + customer));
+        document.add(new Paragraph("Customer: " + customerName));
         document.add(new Paragraph("Amount: ₹" + amount));
-        document.add(new Paragraph("Invoice Date: " + invoice.getInvoiceDate()));
-        document.add(new Paragraph("PO Number: " + invoice.getPoNumber()));
+        document.add(new Paragraph("Invoice Date: " + invoiceDate));
+        document.add(new Paragraph("PO Number: " + poNumber));
 
         document.close();
 
