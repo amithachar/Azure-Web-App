@@ -193,4 +193,35 @@ spring.datasource.password=<your-password>
 azure.storage.connection-string=<your-connection-string>
 azure.storage.container-name=invoices
 
+```
+##  App Service.
+<img width="1881" height="847" alt="image" src="https://github.com/user-attachments/assets/8bf60130-3196-47d4-9fe8-e81bdcdb6356" />
+
+##  App UI.
+<img width="1896" height="953" alt="image" src="https://github.com/user-attachments/assets/bfc75496-21c2-4bcf-b556-36be475f8572" />
+
+## App Storage.
+<img width="1863" height="841" alt="image" src="https://github.com/user-attachments/assets/f1a60a6a-2391-4779-b077-6bb144d6d41a" />
+
+## App SQL Server.
+<img width="1895" height="731" alt="image" src="https://github.com/user-attachments/assets/fa6eef9b-c2a9-4065-a638-f0808f8cbb30" />
+
+## App SQL Server Database.
+
+<img width="1898" height="898" alt="image" src="https://github.com/user-attachments/assets/8a8fa4fd-0d7d-4ffe-a5f2-9f4077e88cfd" />
+
+
+## Resource visualizer
+![invoice-rg](https://github.com/user-attachments/assets/8a20f2b7-5e8c-41ec-a4c7-32e2ceafdd2b)
+
+
+## Adding extra column in current 
+
+```
+SELECT * FROM invoices;
+
+ALTER TABLE invoices
+ADD invoice_date DATE,
+    po_number VARCHAR(100);
+```
 
