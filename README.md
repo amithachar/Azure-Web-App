@@ -224,4 +224,21 @@ ALTER TABLE invoices
 ADD invoice_date DATE,
     po_number VARCHAR(100);
 ```
+## Environment variables
+<img width="1491" height="723" alt="image" src="https://github.com/user-attachments/assets/0177893e-88af-41d6-b648-96af87246b9b" />
 
+## Azure Application & Database Configuration
+
+```
+APPLICATIONINSIGHTS_CONNECTION_STRING
+
+AZURE_STORAGE_CONNECTION_STRING
+
+AZURE_STORAGE_CONTAINER_NAME
+
+spring.datasource.password
+
+spring.datasource.url
+
+spring.datasource.username
+```
